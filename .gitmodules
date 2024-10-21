@@ -1,0 +1,12 @@
+[submodule "Multi-Layer-Anatomy-GS-Unity-Rendering"]
+	path = Multi-Layer-Anatomy-GS-Unity-Rendering
+	url = https://github.com/roth-hex-lab/Multi-Layer-Anatomy-GS-Unity-Rendering
+[submodule "Multi-Layer-Anatomy-GS-Scripts"]
+	path = Multi-Layer-Anatomy-GS-Scripts
+	url = https://github.com/roth-hex-lab/Multi-Layer-Anatomy-GS-Scripts.git
+[submodule "Multi-Layer-Anatomy-GS-Data-Generation"]
+	path = Multi-Layer-Anatomy-GS-Data-Generation
+	url = https://github.com/roth-hex-lab/Multi-Layer-Anatomy-GS-Data-Generation.git
+[submodule "Multi-Layer-Anatomy-GS-Training"]
+	path = Multi-Layer-Anatomy-GS-Training
+	url = https://github.com/roth-hex-lab/Multi-Layer-Anatomy-GS-Training.git
