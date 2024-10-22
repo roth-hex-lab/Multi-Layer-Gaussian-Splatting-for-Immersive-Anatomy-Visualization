@@ -1,6 +1,6 @@
-# Multi-Layer-Gaussian-Splatting-for-Immersive-Anatomy-Visualization
+# Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization
 
-This repository is contains information and links for the publication *Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization*.
+This repository contains information and links for the publication *Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization*.
 
 ## Code
 
