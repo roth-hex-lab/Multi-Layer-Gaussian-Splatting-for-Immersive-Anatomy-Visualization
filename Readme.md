@@ -1,6 +1,6 @@
 # Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization
 
-This repository contains information and links for the publication *Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization*.
+This repository contains information and links for the publication *Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization*. See https://hex-lab.io/Multi-Layer-Gaussian-Splatting-for-Immersive-Anatomy-Visualization/ for more!
 
 ## Code
 
@@ -29,7 +29,17 @@ Find the paper here:
 
 Citation:
 ```
-in progress
+@misc{kleinbeck_multi-layer_2024,
+    title = {Multi-{Layer} {Gaussian} {Splatting} for {Immersive} {Anatomy} {Visualization}},
+    url = {http://arxiv.org/abs/2410.16978},
+    doi = {10.48550/arXiv.2410.16978},
+    publisher = {arXiv},
+    author = {Kleinbeck, Constantin and Schieber, Hannah and Engel, Klaus and Gutjahr, Ralf and Roth, Daniel},
+    month = oct,
+    year = {2024},
+    note = {arXiv:2410.16978},
+    keywords = {Computer Science - Computer Vision and Pattern Recognition, Computer Science - Graphics},
+}
 ```
 
 ### Abstract
