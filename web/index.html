@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization</title>
+    <meta content="Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization" name="description"/>
+    <meta content="Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization" property="og:title"/>
+    <meta content="Gaussian Splatting" name="description"/>
+    <meta content="Virtual Reality" name="description"/>
+    <meta content="Anatomy Visualization" name="description"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <style>
+        .section {
+            margin-top: 7vh;
+        }
+        h1 {
+            margin: 20px;
+        }
+        .vspace-s {
+            padding-top: 2vh;
+        }
+        .vspace-m {
+            padding-top: 4.5vh;
+        }
+        .block {
+            display: inline-block;
+        }
+        .indicator {
+            font-weight: 700;
+            padding-right: 4px;
+        }
+        .bigger {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .typeimg {
+            height: max(70px, 13vh);
+            max-width: 100%;
+            margin: 15px 5px 10px;
+        }
+        a:link {
+            text-decoration: none;
+            color: darkred;
+        }
+
+        a:visited {
+            text-decoration: none;
+            color: darkred;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: darkred;
+        }
+
+        a:active {
+            text-decoration: none;
+            color: darkred;
+        }
+        img.teaser {
+            margin: 0 auto;
+            width: 85%;
+        }
+        .wideline {
+            display: block;
+            position: relative;
+            text-align: center;
+        }
+        .wideline::before{
+            background-color: rgba(0,0,0,0.3);
+            content: "";
+            display: inline-block;
+            position: absolute;
+            width: 80%;
+            height: 1px;
+            top: 53%;
+            left: 10%;
+            z-index: -10;
+        }
+        .wideline span {
+            background-color: #fff;
+            padding: 0 20px;
+        }
+        .zoomed_img {
+            position: relative;
+            overflow: hidden;
+        }
+        .zoomed_img::before {
+            content: "";
+            display: block;
+            padding-top: 100%;
+        }
+        .zoomed_img img {
+            position: absolute;
+            width: 140%;
+            left: -20%;
+            top: -20%;
+            right: 0;
+            bottom: 0;
+        }
+        .barelyzoomed_img {
+            position: relative;
+            overflow: hidden;
+        }
+        .barelyzoomed_img::before {
+            content: "";
+            display: block;
+            padding-top: 100%;
+        }
+        .barelyzoomed_img img {
+            position: absolute;
+            width: 110%;
+            left: -5%;
+            top: -25%;
+            right: 0;
+            bottom: 0;
+        }
+        div.video {
+            aspect-ratio: 16 / 9;
+        }
+        div.video iframe {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+<body>
+<div class="section">
+    <div class="container">
+        <div class="text-center">
+            <h1>Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization</h1>
+
+            <div class="row vspace-s">
+                <div class="col-md-12">
+                    <a href="https://kleinbeck.net" target="_blank" class="authors_a block">
+                        Constantin Kleinbeck <sup>1</sup></a>,
+                    <a href="https://hannahhaensen.github.io" target="_blank" class="authors_a block">
+                        Hannah Schieber <sup>1</sup></a>,
+                    <a href="https://scholar.google.de/citations?user=SZanpiYAAAAJ" target="_blank" class="authors_a block">
+                        Klaus Engel <sup>2</sup>,</a>
+                    <span class="block">
+                        Ralf Gutjahr <sup>3</sup>,</span>
+                    <a href="https://scholar.google.com/citations?user=YonEz-cAAAAJ" target="_blank" class="authors_a block">
+                        Daniel Roth<sup>1</sup>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row vspace-s">
+                <div class="col-md-4">
+                    <sup class="indicator">1</sup>Technical University of Munich, Clinic for Orthopedics and Sports Orthopedics, TUM University Hospital, Munich, Germany
+                </div>
+                <div class="col-md-4">
+                    <sup class="indicator">2</sup>Siemens Healthineers AG, Erlangen, Germany
+                </div>
+                <div class="col-md-4">
+                    <sup class="indicator">3</sup>Siemens Healthineers AG, Forchheim, Germany
+                </div>
+            </div>
+
+            <div class="row vspace-m">
+                <hr>
+                <div class="col-md-4 col-sm-6">
+                    <a href="https://arxiv.org/abs/2410.16978">
+                        <img src="img/paper.png" class="typeimg" style="border: black 1px solid;">
+                    </a>
+                    <p class="bigger">Preprint</p>
+                    <p>
+                        <a href="https://arxiv.org/abs/2410.16978">Arxiv</a><br>
+                    </p>
+                </div>
+
+
+                <div class="col-md-4 col-sm-6">
+                    <a href="https://osf.io/tuwh5/">
+                        <img src="img/fullbody_data.png" class="typeimg">
+                    </a>
+                    <p class="bigger">Datasets and Models</p>
+                    <p>
+                        <i>Download Links:</i><br>
+                        <b><a href="https://osf.io/tuwh5/">Everything: osf.io/tuwh5</a></b><br>
+                        <a href="https://osf.io/download/670933737c83af9658211c3f/">CT Dataset: Leg</a><br>
+                        <a href="https://osf.io/download/kxpsd/">CT Dataset: Fullbody</a><br>
+                        <a href="https://osf.io/download/66f1564b59d9f2817f29e2dd/">CT Dataset: Lowerbody</a><br>
+                        <a href="https://files.de-1.osf.io/v1/resources/tuwh5/providers/osfstorage/66d60856f7deb6d9854598c3/?zip=">Synthetic Dataset</a><br>
+                    </p>
+
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <a href="https://zenodo.org/records/11188134">
+                        <img src="img/github-mark.png" class="typeimg">
+                    </a>
+                    <p class="bigger">Code</p>
+                    <p>
+                        <i>Download Links:</i><br>
+                        <b><a href="https://github.com/roth-hex-lab/Multi-Layer-Gaussian-Splatting-for-Immersive-Anatomy-Visualization">Everything: Github</a></b><br>
+                        <a href="https://github.com/roth-hex-lab/Multi-Layer-Anatomy-GS-Unity-Rendering">Unity Renderer</a><br>
+                        <a href="https://github.com/roth-hex-lab/Multi-Layer-Anatomy-GS-Training">Gaussian Splatting Training</a><br>
+                        <a href="https://github.com/roth-hex-lab/Multi-Layer-Anatomy-GS-Data-Generation">Path Tracer (Dataset Generation)</a><br>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row vspace-m">
+            <h5>Demo Video</h5>
+            <div class="row justify-content-center vspace-s">
+                <div class="col-md-8 video">    
+                    <iframe src="https://www.youtube.com/embed/a6B9Ljci6iw?si=pQnuVO_K3-Q-TI16" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <hr style="margin-top: 4vh;">
+
+        <div class="row vspace-m">
+            <img src="img/teaser.png" class="teaser">
+        </div>
+
+
+        <div class="row vspace-m">
+            <div class="col-sm-12">
+                <h5>
+                    Abstract
+                </h5>
+                <p>
+                    In medical image visualization, path tracing of volumetric medical data like CT scans produces lifelike three-dimensional visualizations. Immersive VR displays can further enhance the understanding of complex anatomies. Going beyond the diagnostic quality of traditional 2D slices, they enable interactive 3D evaluation of anatomies, supporting medical education and planning. Rendering high-quality visualizations in real-time, however, is computationally intensive and impractical for compute-constrained devices like mobile headsets.
+                    <br>
+                    We propose a novel approach utilizing GS to create an efficient but static intermediate representation of CT scans. We introduce a layered GS representation, incrementally including different anatomical structures while minimizing overlap and extending the GS training to remove inactive Gaussians. We further compress the created model with clustering across layers.
+                    <br>
+                    Our approach achieves interactive frame rates while preserving anatomical structures, with quality adjustable to the target hardware. Compared to standard GS, our representation retains some of the explorative qualities initially enabled by immersive path tracing. Selective activation and clipping of layers are possible at rendering time, adding a degree of interactivity to otherwise static GS models. This could enable scenarios where high computational demands would otherwise prohibit using path-traced medical volumes
+                </p>
+            </div>
+        </div>
+
+        <div class="row vspace-m">
+            <h5>Dataset Examples</h5>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-md-4 zoomed_img">
+                        <img src="img/fullbody_L0.png">
+                    </div>
+                    <div class="col-md-4 zoomed_img">
+                        <img src="img/fullbody_L1.png">
+                    </div>
+                    <div class="col-md-4 zoomed_img">
+                        <img  src="img/fullbody_L2.png">
+                    </div>
+                </div>
+                <div class="row">
+                    <p class="wideline"><span>Fullbody Layers</span></p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-md-4 barelyzoomed_img">
+                        <img src="img/synth_L0.png">
+                    </div>
+                    <div class="col-md-4 barelyzoomed_img">
+                        <img src="img/synth_L1.png">
+                    </div>
+                    <div class="col-md-4 barelyzoomed_img">
+                        <img  src="img/synth_L2.png">
+                    </div>
+                </div>
+                <div class="row">
+                    <p class="wideline"><span>Synthetic 3Layers</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="row vspace-s">
+           <p>Note how layers build upon previous ones. Download the CT and synthetic datasets from <a href="https://osf.io/tuwh5/">osf.io/tuwh5</a></p>
+        </div>
+        <div class="row vspace-m">
+            <div class="col-md-12">
+                <h5 class="grey-heading_nerf">
+                    Citation</h5>
+                <pre style="text-align: left; background: aliceblue; margin: 20px; padding: 20px;">
+@misc{kleinbeck_multi-layer_2024,
+    title = {Multi-{Layer} {Gaussian} {Splatting} for {Immersive} {Anatomy} {Visualization}},
+    url = {http://arxiv.org/abs/2410.16978},
+    doi = {10.48550/arXiv.2410.16978},
+    publisher = {arXiv},
+    author = {Kleinbeck, Constantin and Schieber, Hannah and Engel, Klaus and Gutjahr, Ralf and Roth, Daniel},
+    month = oct,
+    year = {2024},
+    note = {arXiv:2410.16978},
+    keywords = {Computer Science - Computer Vision and Pattern Recognition, Computer Science - Graphics},
+}
+</pre>
+            </div>
+        </div>
+        <div class="row vspace-m">
+            <h5>Notes</h5>
+            <p>We gratefully acknowledge funding for this study by d.hip campus.</p>
+        </div>
+        <div class="vspace-m"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+
+</body>
+</html>
